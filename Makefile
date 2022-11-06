@@ -32,7 +32,10 @@ psql_shell:
 	${PSQL_SHELL} -d ${POSTGRES_DB}
 
 create_db:
-	${PSQL_SHELL} -c "CREATE DATABASE oecd_patent;"
+	${PSQL_SHELL} -c "CREATE DATABASE ${POSTGRES_DB};"
 
 create_tables:
 	${PSQL_SHELL} -d ${POSTGRES_DB} -f create_tables.sql
+
+drop_db:
+	${PSQL_SHELL} -c "DROP DATABASE ${POSTGRES_DB};"
