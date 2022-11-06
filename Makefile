@@ -13,7 +13,6 @@ requirements:
 csv_data:
 	unzip -n ${RAW_DATA_DIR}.zip \
 		-d ${RAW_DATA_DIR}
-
 	7z x "${RAW_DATA_DIR}/*.7z" \
 		-o${RAW_DATA_DIR}
 
@@ -29,13 +28,22 @@ postgres_down:
 
 PSQL_SHELL=PGPASSWORD=${POSTGRES_PASSWORD} psql -h localhost -U ${POSTGRES_USER}
 psql_shell:
-	${PSQL_SHELL} -d ${POSTGRES_DB}
+	${PSQL_SHELL} -d ${POSTGRES_DB} ${ARGS}
 
-create_db:
+db:
 	${PSQL_SHELL} -c "CREATE DATABASE ${POSTGRES_DB};"
 
-create_tables:
-	${PSQL_SHELL} -d ${POSTGRES_DB} -f create_tables.sql
+tables:
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_core.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_applicants.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_cpc.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_epo.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_inventors.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_ipc.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_jpo.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_pct.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_priority.sql
+	${PSQL_SHELL} -d ${POSTGRES_DB} -f sql/create_tpf_uspto.sql
 
 drop_db:
 	${PSQL_SHELL} -c "DROP DATABASE ${POSTGRES_DB};"
