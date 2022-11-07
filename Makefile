@@ -1,7 +1,6 @@
 RAW_DATA_DIR=$(shell pwd)/data/OECD_TPF_202208/OECD_TPF_20220820221013171426
 
-POSTGRES_IMAGE=postgres:14.5-bullseye
-POSTGRES_USER=patent_api
+POSTGRES_USER=postgres
 POSTGRES_PASSWORD=password
 POSTGRES_DB=oecd_patent
 POSTGRES_DATA_DIR=$(shell pwd)/data/postgres
@@ -16,15 +15,14 @@ csv_data:
 	7z x "${RAW_DATA_DIR}/*.7z" \
 		-o${RAW_DATA_DIR}
 
-postgres_up:
-	docker run -itd --rm -p 5432:5432 \
-		-e POSTGRES_USER=${POSTGRES_USER} -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
-		-v ${POSTGRES_DATA_DIR}:/var/lib/postgresql/data \
-		-v ${RAW_DATA_DIR}:/csv_data \
-		--name postgresql ${POSTGRES_IMAGE}
-
-postgres_down:
-	docker stop postgresql
+DOCKER_COMPOSE=docker compose -f docker-compose/docker-compose.yaml
+up:
+	${DOCKER_COMPOSE} up ${ARGS} -d
+down:
+	${DOCKER_COMPOSE} down ${ARGS}
+restart:
+	${DOCKER_COMPOSE} restart ${ARGS}
+	
 
 PSQL_SHELL=PGPASSWORD=${POSTGRES_PASSWORD} psql -h localhost -U ${POSTGRES_USER}
 psql_shell:
