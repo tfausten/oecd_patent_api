@@ -5,7 +5,7 @@ services:
     restart: always
     volumes:
     - postgres_data:/var/lib/postgresql/data
-    - ./../data/OECD_TPF_202208/OECD_TPF_20220820221013171426:/csv_data
+    - ./../data/OECD_TPF_202208/OECD_TPF_20220820221013171426:/csv_data:ro
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
@@ -33,6 +33,16 @@ services:
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
       # HASURA_GRAPHQL_LOG_LEVEL: debug
+  grafana:
+    image: grafana/grafana:9.2.3
+    restart: always
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./../grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+    - ./../grafana/grafana.ini:/etc/grafana/provisioning/datasources/grafana.ini:ro
+    - grafana-storage:/var/lib/grafana
 volumes:
   postgres_data:
+  grafana-storage:
 

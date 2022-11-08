@@ -17,16 +17,16 @@ csv_data:
 
 DOCKER_COMPOSE=docker compose -f docker-compose/docker-compose.yaml
 up:
-	${DOCKER_COMPOSE} up ${ARGS} -d
+	${DOCKER_COMPOSE} up ${args} -d
 down:
-	${DOCKER_COMPOSE} down ${ARGS}
+	${DOCKER_COMPOSE} down ${args}
 restart:
-	${DOCKER_COMPOSE} restart ${ARGS}
+	${DOCKER_COMPOSE} restart ${args}
 	
 
 PSQL_SHELL=PGPASSWORD=${POSTGRES_PASSWORD} psql -h localhost -U ${POSTGRES_USER}
 psql_shell:
-	${PSQL_SHELL} -d ${POSTGRES_DB} ${ARGS}
+	${PSQL_SHELL} -d ${POSTGRES_DB} ${args}
 
 db:
 	${PSQL_SHELL} -c "CREATE DATABASE ${POSTGRES_DB};"

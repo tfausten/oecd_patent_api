@@ -1,0 +1,57 @@
+# # config file version
+apiVersion: 1
+
+# # list of datasources that should be deleted from the database
+#deleteDatasources:
+#   - name: Graphite
+#     orgId: 1
+
+# # list of datasources to insert/update depending
+# # on what's available in the database
+datasources:
+#   # <string, required> name of the datasource. Required
+- name: oecd_patent
+#   # <string, required> datasource type. Required
+  type: postgres
+#   # <string, required> access mode. direct or proxy. Required
+  access: direct
+#   # <int> org id. will default to orgId 1 if not specified
+#   orgId: 1
+#   # <string> url
+  url: postgres:5432
+#   # <string> database user, if used
+  user: postgres
+#   # <string> database name, if used
+  database: oecd_patent
+#   # <bool> enable/disable basic auth
+#   basicAuth:
+#   # <string> basic auth username
+#   basicAuthUser:
+#   # <bool> enable/disable with credentials headers
+#   withCredentials:
+#   # <bool> mark as default datasource. Max one per org
+  isDefault: true
+#   # <map> fields that will be converted to json and stored in json_data
+  jsonData:
+    sslmode: "disable" # disable/require/verify-ca/verify-full
+    maxOpenConns: 0         # Grafana v5.4+
+    maxIdleConns: 2         # Grafana v5.4+
+    connMaxLifetime: 14400  # Grafana v5.4+
+    postgresVersion: 1212 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+    timescaledb: false
+#      graphiteVersion: "1.1"
+#      tlsAuth: true
+#      tlsAuthWithCACert: true
+#      httpHeaderName1: "Authorization"
+#   # <string> json object of data that will be encrypted.
+  secureJsonData:
+    password: password
+#     tlsCACert: "..."
+#     tlsClientCert: "..."
+#     tlsClientKey: "..."
+#     # <openshift\kubernetes token example>
+#     httpHeaderValue1: "Bearer xf5yhfkpsnmgo"
+#   version: 1
+#   # <bool> allow users to edit datasources from the UI.
+  editable: false
+
