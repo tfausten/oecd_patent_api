@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: dashboards
+    type: file
+    updateIntervalSeconds: 3
+    options:
+      path: /dashboards
+      foldersFromFilesStructure: true
